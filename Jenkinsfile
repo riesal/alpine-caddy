@@ -42,7 +42,7 @@ def buildDevelop() {
   stage 'Build'
     docker.withRegistry('https://registry.hub.docker.com', 'riesal') {
       def dockerfile = 'Dockerfile'
-      def customImage = docker.build("alpine-caddy:${env.BUILD_ID}", "-f ${dockerfile} . ")
+      def customImage = docker.build("riesal/alpine-caddy:${env.BUILD_ID}", "-f ${dockerfile} . ")
       customImage.push('develop')
     }
 }
