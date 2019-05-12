@@ -35,8 +35,8 @@ node {
 
 def buildDevelop() {
   stage 'Build'
-    def dockerfile = 'Dockerfile.test'
-    def customImage = docker.build("riesal/alpine-caddy:${env.BUILD_ID}", "-f ${dockerfile} ./dockerfiles")
+    def dockerfile = 'Dockerfile'
+    def customImage = docker.build("riesal/alpine-caddy:${env.BUILD_ID}", "-f ${dockerfile} . ")
     customImage.push()
     customImage.push('latest')
 }
@@ -44,7 +44,7 @@ def buildDevelop() {
 def buildMaster() {
   stage 'Build'
     def dockerfile = 'Dockerfile'
-    def customImage = docker.build("riesal/alpine-caddy:${env.BUILD_ID}", "-f ${dockerfile} .")
+    def customImage = docker.build("riesal/alpine-caddy:${env.BUILD_ID}", "-f ${dockerfile} . ")
     customImage.push()
     customImage.push('latest')
 }
