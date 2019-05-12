@@ -5,6 +5,11 @@ node {
   try {
 	  stage 'Checkout'
 		checkout scm
+	  
+	  environment {
+            registry = "riesal/alpine-caddy"
+            registryCredential = 'dockerhub'
+          }
 
 	  if (env.BRANCH_NAME == 'develop') {
 		stage ('Linting')
@@ -35,10 +40,11 @@ node {
 
 def buildDevelop() {
   stage 'Build'
-    def dockerfile = 'Dockerfile'
-    def customImage = docker.build("alpine-caddy:${env.BUILD_ID}", "-f ${dockerfile} . ")
-    customImage.push()
-    customImage.push('latest')
+    docker.withRegistry('https://registry.hub.docker.com', 'riesal') {
+      def dockerfile = 'Dockerfile'
+      def customImage = docker.build("alpine-caddy:${env.BUILD_ID}", "-f ${dockerfile} . ")
+      customImage.push('develop')
+    }
 }
 
 def buildMaster() {
