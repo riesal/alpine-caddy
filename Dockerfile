@@ -9,3 +9,4 @@ RUN curl https://getcaddy.com | bash -s personal http.authz,http.awses,http.awsl
 
 #Remove build devs
 RUN apk del rizalpack
+# re-test
